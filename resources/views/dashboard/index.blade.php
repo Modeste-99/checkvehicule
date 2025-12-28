@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
+@section('title', 'Tableau de bord')
 
 @section('content')
 
 <div class="mb-8">
-    <h1 class="text-4xl font-bold text-gray-900 mb-2">Dashboard</h1>
+    <h1 class="text-4xl font-bold text-gray-900 mb-2">Tableau de bord</h1>
     <p class="text-gray-600">Vue d'ensemble de votre gestion de véhicules</p>
 </div>
 
@@ -84,7 +84,7 @@
         <a href="{{ route('entretiens.create') }}" class="flex items-center gap-3 p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors duration-200">
             <span class="text-2xl">🔧</span>
             <div>
-                <p class="font-semibold text-gray-900">Nouvel entretien</p>
+                <p class="font-semibold text-gray-900">Planifier un entretien</p>
                 <p class="text-sm text-gray-600">Enregistrer un entretien</p>
             </div>
         </a>

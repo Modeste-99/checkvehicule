@@ -80,6 +80,12 @@
                     <span class="font-medium">Carte</span>
                 </a>
 
+                <a href="{{ route('rappels.index') }}" class="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-gray-700
+                    transition-colors duration-200 {{ request()->is('rappels*') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
+                    <span>⏰</span>
+                    <span class="font-medium">Rappels</span>
+                </a>
+
                 <a href="/profile" class="flex items-center gap-3 py-3 px-4 rounded-lg hover:bg-gray-700
                     transition-colors duration-200 {{ request()->is('profile*') ? 'bg-blue-600 text-white' : 'text-gray-300' }}">
                     <span>👤</span>

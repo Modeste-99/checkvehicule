@@ -42,13 +42,13 @@ class ProfileController extends Controller
         // Upload de la photo de profil
         if ($request->hasFile('photo')) {
             // Supprimer l'ancienne photo si elle existe
-            if ($user->photo && Storage::exists('public/profiles/' . $user->photo)) {
-                Storage::delete('public/profiles/' . $user->photo);
+            if ($user->photo && Storage::exists('public/storage/profiles/' . $user->photo)) {
+                Storage::delete('public/storage/profiles/' . $user->photo);
             }
 
             $file = $request->file('photo');
             $filename = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('public/profiles', $filename);
+            $file->storeAs('public/storage/profiles', $filename);
             $data['photo'] = $filename;
         }
 

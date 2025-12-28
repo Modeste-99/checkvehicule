@@ -13,6 +13,7 @@ use App\Http\Controllers\EntretienController;
 use App\Http\Controllers\GarageController;
 use App\Http\Controllers\CoursController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RappelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -57,6 +58,9 @@ Route::middleware('auth')->group(function () {
     // Cours
     Route::resource('cours', CoursController::class);
     Route::get('cours/{cour}/download', [CoursController::class, 'download'])->name('cours.download');
+
+    // Rappels
+    Route::resource('rappels', RappelController::class)->except(['show', 'edit', 'update']);
 
     // Profil
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');
