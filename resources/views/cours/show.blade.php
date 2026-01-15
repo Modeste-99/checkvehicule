@@ -8,9 +8,9 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-3xl font-bold text-gray-900 mb-2">{{ $cour->titre }}</h1>
-            @if($cour->categorie)
+            @if($cour->type_fichier)
             <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full bg-indigo-100 text-indigo-800 mb-2">
-                {{ $cour->categorie }}
+                {{ strtoupper($cour->type_fichier) }}
             </span>
             @endif
         </div>
@@ -57,22 +57,35 @@
         <div class="bg-gradient-to-br from-indigo-50 to-indigo-100 rounded-xl shadow-lg p-6">
             <div class="text-center">
                 <div class="bg-indigo-600 p-4 rounded-full inline-block mb-4">
-                    <span class="text-4xl">📚</span>
+                    @if($cour->type_fichier === 'pdf')
+                        <span class="text-4xl">📄</span>
+                    @elseif(in_array($cour->type_fichier, ['doc', 'docx']))
+                        <span class="text-4xl">📝</span>
+                    @elseif(in_array($cour->type_fichier, ['ppt', 'pptx']))
+                        <span class="text-4xl">📊</span>
+                    @elseif($cour->type_fichier === 'txt')
+                        <span class="text-4xl">📃</span>
+                    @else
+                        <span class="text-4xl">📎</span>
+                    @endif
                 </div>
-                <h3 class="text-lg font-bold text-gray-900 mb-2">Document PDF</h3>
-                @if($cour->fichier_pdf)
-                <p class="text-sm text-gray-600 mb-4">Téléchargez le document PDF de ce cours</p>
+                <h3 class="text-lg font-bold text-gray-900 mb-2">Document</h3>
+                @if($cour->fichier)
+                <div class="mb-4">
+                    <p class="text-sm text-gray-600">Type: {{ strtoupper($cour->type_fichier) }}</p>
+                    <p class="text-sm text-gray-600">Taille: {{ number_format(Storage::size('public/cours/' . $cour->fichier) / 1024, 1) }} KB</p>
+                </div>
                 <a href="{{ route('cours.download', $cour) }}" 
                    class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 w-full justify-center">
                     <span>⬇️</span>
-                    <span>Télécharger le PDF</span>
+                    <span>Télécharger le fichier</span>
                 </a>
                 @else
-                <p class="text-sm text-red-600 mb-4">Aucun fichier PDF disponible</p>
+                <p class="text-sm text-red-600 mb-4">Aucun fichier disponible</p>
                 <a href="{{ route('cours.edit', $cour) }}" 
                    class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 w-full justify-center">
                     <span>➕</span>
-                    <span>Ajouter un PDF</span>
+                    <span>Ajouter un fichier</span>
                 </a>
                 @endif
             </div>

@@ -10,9 +10,11 @@ class Cours extends Model
         'user_id',
         'titre',
         'description',
-        'fichier_pdf',
-        'categorie',
+        'fichier',
+        'type_fichier',
     ];
+    
+    protected $appends = ['fichier_url'];
 
     public function user()
     {
@@ -20,10 +22,10 @@ class Cours extends Model
     }
 
     /**
-     * Get the URL to download the PDF file
+     * Get the URL to download the file
      */
-    public function getPdfUrlAttribute()
+    public function getFichierUrlAttribute()
     {
-        return $this->fichier_pdf ? asset('storage/cours/' . $this->fichier_pdf) : null;
+        return $this->fichier ? asset('storage/cours/' . $this->fichier) : null;
     }
 }

@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('cours', function (Blueprint $table) {
-            $table->foreignId('user_id')->nullable()->after('id')->constrained()->onDelete('cascade');
+        Schema::table('vehicules', function (Blueprint $table) {
+            $table->string('photo')->nullable()->after('kilometrage');
         });
     }
 
@@ -21,9 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('cours', function (Blueprint $table) {
-            $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+        Schema::table('vehicules', function (Blueprint $table) {
+            $table->dropColumn('photo');
         });
     }
 };

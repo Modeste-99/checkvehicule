@@ -140,5 +140,29 @@
         @include('components.mobile-nav')
     @endauth
 
+    <script>
+        // Fonction pour basculer la visibilité du mot de passe
+        function togglePasswordVisibility(fieldId) {
+            const passwordInput = document.getElementById(fieldId);
+            const eyeIcon = document.getElementById(fieldId + '-eye');
+            
+            if (passwordInput) {
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    // Ajouter une légère opacité pour indiquer que le mot de passe est visible
+                    if (eyeIcon) {
+                        eyeIcon.classList.add('opacity-70');
+                    }
+                } else {
+                    passwordInput.type = 'password';
+                    // Retirer l'opacité
+                    if (eyeIcon) {
+                        eyeIcon.classList.remove('opacity-70');
+                    }
+                }
+            }
+        }
+    </script>
+
 </body>
 </html>

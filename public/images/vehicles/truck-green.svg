@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#f0fdf4"/>
+  
+  <!-- Car shadow -->
+  <ellipse cx="200" cy="140" rx="120" ry="45" fill="#16a34a" opacity="0.1"/>
+  
+  <!-- SUV/Truck style vehicle -->
+  <g>
+    <!-- Front bumper -->
+    <rect x="80" y="140" width="20" height="40" fill="#1f2937" rx="3"/>
+    
+    <!-- Car body - main (SUV style) -->
+    <rect x="100" y="125" width="200" height="55" fill="#22c55e" rx="8"/>
+    
+    <!-- Cargo area (raised) -->
+    <rect x="180" y="110" width="80" height="25" fill="#16a34a" rx="6"/>
+    
+    <!-- Rear bumper -->
+    <rect x="300" y="140" width="20" height="40" fill="#1f2937" rx="3"/>
+    
+    <!-- Roof -->
+    <path d="M 120 125 L 160 95 L 240 95 L 280 125" fill="#15803d"/>
+    
+    <!-- Windows -->
+    <!-- Front window -->
+    <rect x="165" y="100" width="40" height="30" fill="#86efac" rx="3" opacity="0.8"/>
+    <!-- Side window -->
+    <rect x="215" y="110" width="35" height="25" fill="#86efac" rx="2" opacity="0.8"/>
+  </g>
+  
+  <!-- Wheels -->
+  <g>
+    <!-- Front wheel -->
+    <circle cx="135" cy="190" r="20" fill="#1f2937"/>
+    <circle cx="135" cy="190" r="15" fill="#374151"/>
+    <circle cx="135" cy="190" r="9" fill="#4b5563"/>
+    
+    <!-- Rear wheel -->
+    <circle cx="265" cy="190" r="20" fill="#1f2937"/>
+    <circle cx="265" cy="190" r="15" fill="#374151"/>
+    <circle cx="265" cy="190" r="9" fill="#4b5563"/>
+  </g>
+  
+  <!-- Headlights -->
+  <circle cx="105" cy="130" r="7" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="105" cy="155" r="7" fill="#fbbf24" opacity="0.9"/>
+  
+  <!-- Door line -->
+  <line x1="180" y1="180" x2="220" y2="180" stroke="#dcfce7" stroke-width="2"/>
+  
+  <!-- Text -->
+  <text x="200" y="230" font-size="20" font-weight="bold" text-anchor="middle" fill="#15803d">Suivi Entretien</text>
+</svg>

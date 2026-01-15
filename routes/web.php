@@ -71,6 +71,7 @@ Route::middleware('auth')->group(function () {
 
     // Rappels
     Route::resource('rappels', RappelController::class)->except(['show']);
+    Route::get('rappels-vehicules', [RappelController::class, 'vehiclesWithReminders'])->name('rappels.vehicules');
 
     // Profil
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');

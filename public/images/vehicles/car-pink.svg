@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#fce7f3"/>
+  
+  <!-- Car shadow -->
+  <ellipse cx="200" cy="140" rx="120" ry="45" fill="#ec4899" opacity="0.1"/>
+  
+  <!-- Electric/Modern car -->
+  <g>
+    <!-- Front bumper -->
+    <rect x="75" y="142" width="30" height="35" fill="#1f2937" rx="5"/>
+    
+    <!-- Car body - modern -->
+    <rect x="105" y="128" width="190" height="52" fill="#ec4899" rx="10"/>
+    
+    <!-- Rear bumper -->
+    <rect x="295" y="142" width="30" height="35" fill="#1f2937" rx="5"/>
+    
+    <!-- Roof -->
+    <path d="M 135 128 L 175 98 L 225 98 L 265 128" fill="#db2777"/>
+    
+    <!-- Windows -->
+    <!-- Front window -->
+    <rect x="165" y="103" width="38" height="27" fill="#f472b6" rx="5" opacity="0.7"/>
+    
+    <!-- Side window -->
+    <rect x="215" y="110" width="30" height="23" fill="#f472b6" rx="2" opacity="0.7"/>
+  </g>
+  
+  <!-- Wheels -->
+  <g>
+    <!-- Front wheel -->
+    <circle cx="135" cy="188" r="19" fill="#1f2937"/>
+    <circle cx="135" cy="188" r="14" fill="#374151"/>
+    <circle cx="135" cy="188" r="7" fill="#6b7280"/>
+    
+    <!-- Rear wheel -->
+    <circle cx="265" cy="188" r="19" fill="#1f2937"/>
+    <circle cx="265" cy="188" r="14" fill="#374151"/>
+    <circle cx="265" cy="188" r="7" fill="#6b7280"/>
+  </g>
+  
+  <!-- LED Headlights -->
+  <g fill="#06b6d4" opacity="0.9">
+    <circle cx="107" cy="133" r="5"/>
+    <circle cx="107" cy="155" r="5"/>
+  </g>
+  
+  <!-- Design accent lines -->
+  <g stroke="#f472b6" stroke-width="1.5" opacity="0.4">
+    <path d="M 110 160 Q 150 165 200 165 T 290 160" fill="none"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="200" y="230" font-size="20" font-weight="bold" text-anchor="middle" fill="#be185d">Véhicules Modernes</text>
+</svg>

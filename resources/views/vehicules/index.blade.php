@@ -16,66 +16,70 @@
 </div>
 
 <div class="bg-white rounded-xl shadow-lg overflow-hidden">
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-gray-200">
-            <thead class="bg-gray-50">
-                <tr>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Marque</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Modèle</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Immatriculation</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Année</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Kilométrage</th>
-                    <th class="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
-                @forelse($vehicules as $v)
-                <tr class="hover:bg-gray-50 transition-colors duration-150">
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-semibold text-gray-900">{{ $v->marque }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">{{ $v->modele }}</div>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+        @forelse($vehicules as $v)
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden hover:shadow-lg transition-shadow duration-200">
+                <!-- Photo du véhicule -->
+                <div class="relative w-full h-28 bg-gray-200 overflow-hidden">
+                    @if($v->photo)
+                        <img src="{{ asset('storage/' . $v->photo) }}" alt="{{ $v->marque }} {{ $v->modele }}" class="w-full h-full object-cover object-center">
+                    @else
+                        <div class="w-full h-full flex items-center justify-center">
+                            <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                    @endif
+                </div>
+
+                <!-- Informations du véhicule -->
+                <div class="p-4">
+                    <div class="mb-3">
+                        <h3 class="text-lg font-bold text-gray-900">{{ $v->marque }} {{ $v->modele }}</h3>
+                        <span class="inline-block mt-1 px-3 py-1 bg-blue-100 text-blue-800 text-xs font-semibold rounded-full">
                             {{ $v->immatriculation }}
                         </span>
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                        {{ $v->annee }}
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                        {{ number_format($v->kilometrage, 0, ',', ' ') }} km
-                    </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div class="flex items-center justify-end gap-2">
-                            <a href="{{ route('vehicules.edit', $v) }}" class="text-blue-600 hover:text-blue-900 font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors">
-                                ✏️ Modifier
-                            </a>
-                            <form action="{{ route('vehicules.destroy', $v) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 font-medium px-3 py-1 rounded hover:bg-red-50 transition-colors">
-                                    🗑️ Supprimer
-                                </button>
-                            </form>
+                    </div>
+
+                    <div class="space-y-2 text-sm text-gray-600">
+                        <div class="flex justify-between">
+                            <span>Année:</span>
+                            <span class="font-semibold">{{ $v->annee }}</span>
                         </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="6" class="px-6 py-12 text-center">
-                        <div class="text-gray-400">
-                            <span class="text-4xl block mb-2">🚗</span>
-                            <p class="text-lg font-medium">Aucun véhicule enregistré</p>
-                            <p class="text-sm mt-1">Commencez par ajouter votre premier véhicule</p>
+                        <div class="flex justify-between">
+                            <span>Kilométrage:</span>
+                            <span class="font-semibold">{{ number_format($v->kilometrage, 0, ',', ' ') }} km</span>
                         </div>
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="mt-4 flex items-center gap-2">
+                        <a href="{{ route('vehicules.edit', $v) }}" class="flex-1 text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-3 rounded-lg transition-colors text-sm">
+                            ✏️ Modifier
+                        </a>
+                        <form action="{{ route('vehicules.destroy', $v) }}" method="POST" class="flex-1" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer ce véhicule ?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-3 rounded-lg transition-colors text-sm">
+                                🗑️ Supprimer
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        @empty
+            <div class="col-span-full">
+                <div class="text-center py-16 bg-gray-50 rounded-lg">
+                    <span class="text-6xl block mb-4">🚗</span>
+                    <p class="text-lg font-bold text-gray-900">Aucun véhicule enregistré</p>
+                    <p class="text-gray-600 mt-2">Commencez par ajouter votre premier véhicule</p>
+                    <a href="{{ route('vehicules.create') }}" class="mt-4 inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg">
+                        <span>➕</span>
+                        <span>Ajouter un véhicule</span>
+                    </a>
+                </div>
+            </div>
+        @endforelse
     </div>
 </div>
 

@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#dbeafe"/>
+  
+  <!-- Car shadow -->
+  <ellipse cx="200" cy="140" rx="125" ry="45" fill="#0ea5e9" opacity="0.1"/>
+  
+  <!-- Van/Utility vehicle -->
+  <g>
+    <!-- Front bumper -->
+    <rect x="75" y="140" width="25" height="40" fill="#1f2937" rx="3"/>
+    
+    <!-- Main cargo body -->
+    <rect x="100" y="120" width="210" height="60" fill="#0ea5e9" rx="12"/>
+    
+    <!-- Rear bumper -->
+    <rect x="300" y="140" width="25" height="40" fill="#1f2937" rx="3"/>
+    
+    <!-- Roof arch -->
+    <path d="M 110 120 Q 120 85 200 85 Q 280 85 290 120" fill="#0284c7"/>
+    
+    <!-- Windows (cargo van) -->
+    <!-- Front window -->
+    <rect x="165" y="95" width="45" height="30" fill="#7dd3fc" rx="5" opacity="0.8"/>
+    
+    <!-- Side window 1 -->
+    <rect x="135" y="135" width="35" height="25" fill="#7dd3fc" rx="3" opacity="0.6"/>
+    
+    <!-- Side window 2 -->
+    <rect x="205" y="135" width="35" height="25" fill="#7dd3fc" rx="3" opacity="0.6"/>
+    
+    <!-- Rear window -->
+    <rect x="250" y="130" width="30" height="30" fill="#7dd3fc" rx="3" opacity="0.6"/>
+  </g>
+  
+  <!-- Wheels -->
+  <g>
+    <!-- Front wheel -->
+    <circle cx="125" cy="192" r="21" fill="#1f2937"/>
+    <circle cx="125" cy="192" r="16" fill="#374151"/>
+    <circle cx="125" cy="192" r="10" fill="#4b5563"/>
+    
+    <!-- Rear wheel -->
+    <circle cx="275" cy="192" r="21" fill="#1f2937"/>
+    <circle cx="275" cy="192" r="16" fill="#374151"/>
+    <circle cx="275" cy="192" r="10" fill="#4b5563"/>
+  </g>
+  
+  <!-- Headlights -->
+  <circle cx="102" cy="128" r="6" fill="#fbbf24" opacity="0.95"/>
+  <circle cx="102" cy="152" r="6" fill="#fbbf24" opacity="0.95"/>
+  
+  <!-- Door handle line -->
+  <line x1="170" y1="180" x2="230" y2="180" stroke="#06b6d4" stroke-width="2" opacity="0.5"/>
+  
+  <!-- Loading area indicator -->
+  <g opacity="0.3">
+    <line x1="140" y1="145" x2="140" y2="165" stroke="#1f2937" stroke-width="1"/>
+    <line x1="170" y1="145" x2="170" y2="165" stroke="#1f2937" stroke-width="1"/>
+    <line x1="200" y1="145" x2="200" y2="165" stroke="#1f2937" stroke-width="1"/>
+    <line x1="230" y1="145" x2="230" y2="165" stroke="#1f2937" stroke-width="1"/>
+  </g>
+  
+  <!-- Text -->
+  <text x="200" y="230" font-size="20" font-weight="bold" text-anchor="middle" fill="#0369a1">Fourgonnette Pro</text>
+</svg>

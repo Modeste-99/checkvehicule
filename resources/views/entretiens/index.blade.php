@@ -24,7 +24,7 @@
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Type</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Date</th>
                     <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Kilométrage</th>
-                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Prix</th>
+                    <th class="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Coûts (FCFA)</th>
                     <th class="px-6 py-4 text-right text-xs font-semibold text-gray-700 uppercase tracking-wider">Actions</th>
                 </tr>
             </thead>
@@ -32,13 +32,30 @@
                 @forelse($entretiens as $e)
                 <tr class="hover:bg-gray-50 transition-colors duration-150">
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="flex items-center">
-                            <div class="text-sm font-semibold text-gray-900">
-                                {{ $e->vehicule->marque }} {{ $e->vehicule->modele }}
+                        <div class="flex items-center space-x-3">
+                            <div class="flex-shrink-0">
+                                @if($e->vehicule->photo)
+                                    <img src="{{ asset('storage/' . $e->vehicule->photo) }}" 
+                                         alt="{{ $e->vehicule->marque }} {{ $e->vehicule->modele }}" 
+                                         class="object-cover rounded-lg"
+                                         style="width: 3cm; height: 3cm; object-fit: cover;">
+                                @else
+                                    <div class="rounded-lg bg-gray-200 flex items-center justify-center" 
+                                         style="width: 3cm; height: 3cm;">
+                                        <svg class="h-6 w-6 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                        </svg>
+                                    </div>
+                                @endif
                             </div>
-                        </div>
-                        <div class="text-xs text-gray-500 mt-1">
-                            {{ $e->vehicule->immatriculation }}
+                            <div>
+                                <div class="text-sm font-semibold text-gray-900">
+                                    {{ $e->vehicule->marque }} {{ $e->vehicule->modele }}
+                                </div>
+                                <div class="text-xs text-gray-500">
+                                    {{ $e->vehicule->immatriculation }}
+                                </div>
+                            </div>
                         </div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
@@ -56,23 +73,36 @@
                             <span class="text-gray-400">-</span>
                         @endif
                     </td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-900">
-                        @if($e->prix)
-                            {{ number_format($e->prix, 0, ',', ' ') }} FCFA
+                    <td class="px-6 py-4 whitespace-nowrap text-sm">
+                        @if($e->prix_pieces || $e->prix_main_oeuvre)
+                            <div class="text-gray-700">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Pièces :</span>
+                                    <span class="font-medium">{{ $e->prix_pieces ? number_format($e->prix_pieces, 0, ',', ' ') : '0' }}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-500">Main d'œuvre :</span>
+                                    <span class="font-medium">{{ $e->prix_main_oeuvre ? number_format($e->prix_main_oeuvre, 0, ',', ' ') : '0' }}</span>
+                                </div>
+                                <div class="flex justify-between mt-1 pt-1 border-t border-gray-100">
+                                    <span class="font-semibold">Total :</span>
+                                    <span class="font-bold">{{ number_format($e->prix, 0, ',', ' ') }}</span>
+                                </div>
+                            </div>
                         @else
                             <span class="text-gray-400">-</span>
                         @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <div class="flex items-center justify-end gap-2">
-                            <a href="{{ route('entretiens.edit', $e) }}" class="text-blue-600 hover:text-blue-900 font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors">
-                                ✏️ Modifier
+                            <a href="{{ route('entretiens.edit', $e) }}" class="text-blue-600 hover:text-blue-900 font-medium px-3 py-1 rounded hover:bg-blue-50 transition-colors" title="Modifier">
+                                ✏️
                             </a>
-                            <form action="{{ route('entretiens.destroy', $e) }}" method="POST" class="inline" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet entretien ?');">
+                            <form action="{{ route('entretiens.destroy', $e) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet entretien ?');">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 font-medium px-3 py-1 rounded hover:bg-red-50 transition-colors">
-                                    🗑️ Supprimer
+                                <button type="submit" class="text-red-600 hover:text-red-900 font-medium px-3 py-1 rounded hover:bg-red-50 transition-colors" title="Supprimer">
+                                    🗑️
                                 </button>
                             </form>
                         </div>

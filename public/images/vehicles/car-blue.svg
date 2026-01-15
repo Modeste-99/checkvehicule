@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250" width="400" height="250">
+  <!-- Background -->
+  <rect width="400" height="250" fill="#f0f9ff"/>
+  
+  <!-- Car body -->
+  <ellipse cx="200" cy="140" rx="120" ry="45" fill="#3b82f6" opacity="0.1"/>
+  
+  <!-- Main car shape -->
+  <g>
+    <!-- Front bumper -->
+    <rect x="85" y="145" width="15" height="35" fill="#1f2937" rx="3"/>
+    <!-- Car body - main -->
+    <rect x="100" y="130" width="200" height="50" fill="#3b82f6" rx="8"/>
+    <!-- Rear bumper -->
+    <rect x="300" y="145" width="15" height="35" fill="#1f2937" rx="3"/>
+    
+    <!-- Roof -->
+    <path d="M 130 130 L 160 100 L 240 100 L 270 130" fill="#2563eb"/>
+    
+    <!-- Windows -->
+    <!-- Front window -->
+    <rect x="165" y="105" width="35" height="25" fill="#93c5fd" rx="3" opacity="0.8"/>
+    <!-- Rear window -->
+    <rect x="210" y="110" width="35" height="20" fill="#93c5fd" rx="2" opacity="0.8"/>
+  </g>
+  
+  <!-- Wheels -->
+  <g>
+    <!-- Front wheel -->
+    <circle cx="140" cy="185" r="18" fill="#1f2937"/>
+    <circle cx="140" cy="185" r="14" fill="#374151"/>
+    <circle cx="140" cy="185" r="8" fill="#4b5563"/>
+    
+    <!-- Rear wheel -->
+    <circle cx="260" cy="185" r="18" fill="#1f2937"/>
+    <circle cx="260" cy="185" r="14" fill="#374151"/>
+    <circle cx="260" cy="185" r="8" fill="#4b5563"/>
+  </g>
+  
+  <!-- Headlights -->
+  <circle cx="105" cy="135" r="6" fill="#fbbf24" opacity="0.9"/>
+  <circle cx="105" cy="155" r="6" fill="#fbbf24" opacity="0.9"/>
+  
+  <!-- Details -->
+  <line x1="180" y1="180" x2="220" y2="180" stroke="#f3f4f6" stroke-width="2" stroke-dasharray="4"/>
+  
+  <!-- Text -->
+  <text x="200" y="230" font-size="20" font-weight="bold" text-anchor="middle" fill="#1f2937">Gestion Véhicules</text>
+</svg>

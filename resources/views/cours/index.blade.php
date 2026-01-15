@@ -42,14 +42,17 @@
                     <span>Ajouté le {{ \Carbon\Carbon::parse($cour->created_at)->format('d/m/Y') }}</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    @if($cour->fichier_pdf)
-                    <a href="{{ route('cours.download', $cour) }}" 
-                       class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200">
-                        <span>⬇️</span>
-                        <span>Télécharger</span>
-                    </a>
+                    @if($cour->fichier)
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs bg-gray-100 px-2 py-1 rounded">{{ strtoupper($cour->type_fichier) }}</span>
+                        <a href="{{ route('cours.download', $cour) }}" 
+                           class="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg text-sm transition-colors duration-200">
+                            <span>⬇️</span>
+                            <span>Télécharger</span>
+                        </a>
+                    </div>
                     @else
-                    <span class="text-xs text-gray-400">PDF non disponible</span>
+                    <span class="text-xs text-gray-400">Fichier non disponible</span>
                     @endif
                 </div>
             </div>

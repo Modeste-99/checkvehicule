@@ -13,6 +13,7 @@ class Vehicule extends Model
         'immatriculation',
         'annee',
         'kilometrage',
+        'photo',
     ];
 
     public function user()

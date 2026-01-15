@@ -33,18 +33,18 @@ class CoursController extends Controller
         $request->validate([
             'titre' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'categorie' => 'nullable|string|max:255',
-            'fichier_pdf' => 'required|file|mimes:pdf|max:10240', // Max 10MB
+            'fichier' => 'required|file|mimes:pdf,doc,docx,ppt,pptx,txt|max:10240', // Max 10MB
         ]);
 
-        $data = $request->only(['titre', 'description', 'categorie']);
+        $data = $request->only(['titre', 'description']);
 
-        // Upload du fichier PDF
-        if ($request->hasFile('fichier_pdf')) {
-            $file = $request->file('fichier_pdf');
+        // Upload du fichier
+        if ($request->hasFile('fichier')) {
+            $file = $request->file('fichier');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('public/cours', $filename);
-            $data['fichier_pdf'] = $filename;
+            $data['fichier'] = $filename;
+            $data['type_fichier'] = $file->getClientOriginalExtension();
         }
 
         $data['user_id'] = auth()->id();
@@ -75,11 +75,25 @@ class CoursController extends Controller
             abort(403, 'Accès non autorisé');
         }
 
-        if (!$cour->fichier_pdf || !Storage::exists('public/cours/' . $cour->fichier_pdf)) {
-            return redirect()->route('cours.index')->with('error', 'Fichier PDF introuvable.');
+        $filePath = 'public/cours/' . $cour->fichier;
+        
+        if (!$cour->fichier || !Storage::exists($filePath)) {
+            return redirect()->route('cours.index')
+                ->with('error', 'Fichier introuvable : ' . $filePath);
         }
 
-        return Storage::download('public/cours/' . $cour->fichier_pdf, $cour->titre . '.pdf');
+        // Récupérer le contenu du fichier
+        $fileContents = Storage::get($filePath);
+        $fileName = str_replace(' ', '_', $cour->titre) . '.' . pathinfo($cour->fichier, PATHINFO_EXTENSION);
+        
+        // Télécharger le fichier avec les en-têtes appropriés
+        $headers = [
+            'Content-Type' => Storage::mimeType($filePath),
+            'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
+            'Content-Length' => Storage::size($filePath),
+        ];
+        
+        return response($fileContents, 200, $headers);
     }
 
     /**
@@ -99,26 +113,31 @@ class CoursController extends Controller
      */
     public function update(Request $request, Cours $cour)
     {
+        // Vérifier que le cours appartient à l'utilisateur
+        if ($cour->user_id !== auth()->id()) {
+            abort(403, 'Accès non autorisé');
+        }
+
         $request->validate([
             'titre' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'categorie' => 'nullable|string|max:255',
-            'fichier_pdf' => 'nullable|file|mimes:pdf|max:10240', // Max 10MB
+            'fichier' => 'nullable|file|mimes:pdf,doc,docx,ppt,pptx,txt|max:10240', // Max 10MB
         ]);
 
-        $data = $request->only(['titre', 'description', 'categorie']);
+        $data = $request->only(['titre', 'description']);
 
-        // Upload du nouveau fichier PDF si fourni
-        if ($request->hasFile('fichier_pdf')) {
+        // Mise à jour du fichier si fourni
+        if ($request->hasFile('fichier')) {
             // Supprimer l'ancien fichier
-            if ($cour->fichier_pdf && Storage::exists('public/cours/' . $cour->fichier_pdf)) {
-                Storage::delete('public/cours/' . $cour->fichier_pdf);
+            if ($cour->fichier && Storage::exists('public/cours/' . $cour->fichier)) {
+                Storage::delete('public/cours/' . $cour->fichier);
             }
 
-            $file = $request->file('fichier_pdf');
+            $file = $request->file('fichier');
             $filename = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('public/cours', $filename);
-            $data['fichier_pdf'] = $filename;
+            $data['fichier'] = $filename;
+            $data['type_fichier'] = $file->getClientOriginalExtension();
         }
 
         $cour->update($data);
@@ -136,9 +155,9 @@ class CoursController extends Controller
             abort(403, 'Accès non autorisé');
         }
 
-        // Supprimer le fichier PDF
-        if ($cour->fichier_pdf && Storage::exists('public/cours/' . $cour->fichier_pdf)) {
-            Storage::delete('public/cours/' . $cour->fichier_pdf);
+        // Supprimer le fichier
+        if ($cour->fichier && Storage::exists('public/cours/' . $cour->fichier)) {
+            Storage::delete('public/cours/' . $cour->fichier);
         }
 
         $cour->delete();

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Entretien;
 use App\Models\Vehicule;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class EntretienController extends Controller
 {
@@ -39,13 +40,25 @@ class EntretienController extends Controller
             'type' => 'required|string',
             'date_entretien' => 'required|date',
             'kilometrage' => 'nullable|integer',
-            'prix' => 'nullable|numeric',
+            'prix_pieces' => 'nullable|numeric|min:0',
+            'prix_main_oeuvre' => 'nullable|numeric|min:0',
+            'note' => 'nullable|string',
         ]);
 
         // Vérifier que le véhicule appartient à l'utilisateur
         $vehicule = Vehicule::findOrFail($request->vehicule_id);
 
-        $data = $request->only(['vehicule_id', 'type', 'date_entretien', 'kilometrage', 'prix', 'note']);
+        $data = $request->only([
+            'vehicule_id', 
+            'type', 
+            'date_entretien', 
+            'kilometrage', 
+            'prix_pieces', 
+            'prix_main_oeuvre',
+            'note'
+        ]);
+        
+        // Le prix total sera calculé automatiquement par le modèle
         $data['user_id'] = auth()->id();
         Entretien::create($data);
 
@@ -82,12 +95,24 @@ class EntretienController extends Controller
             ],
             'type' => 'required|string',
             'date_entretien' => 'required|date',
+            'kilometrage' => 'nullable|integer',
+            'prix_pieces' => 'nullable|numeric|min:0',
+            'prix_main_oeuvre' => 'nullable|numeric|min:0',
+            'note' => 'nullable|string',
         ]);
 
         // Vérifier que le véhicule appartient à l'utilisateur
         $vehicule = Vehicule::findOrFail($request->vehicule_id);
 
-        $entretien->update($request->only(['vehicule_id', 'type', 'date_entretien', 'kilometrage', 'prix', 'note']));
+        $entretien->update($request->only([
+            'vehicule_id', 
+            'type', 
+            'date_entretien', 
+            'kilometrage', 
+            'prix_pieces', 
+            'prix_main_oeuvre',
+            'note'
+        ]));
 
         return redirect()->route('entretiens.index')->with('success', 'Entretien mis à jour !');
     }

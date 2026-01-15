@@ -15,9 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('titre');
             $table->text('description')->nullable();
-            $table->string('fichier_pdf')->nullable();
-            $table->string('categorie')->nullable(); // Ex: Code de la route, Conduite, etc.
+            $table->string('fichier');
+            $table->string('type_fichier');
+            $table->unsignedBigInteger('user_id');
             $table->timestamps();
+            
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -26,10 +26,18 @@ class VehiculeController extends Controller
             'immatriculation' => 'required|unique:vehicules,immatriculation,NULL,id,user_id,' . auth()->id(),
             'annee' => 'required|integer',
             'kilometrage' => 'required|integer',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $data = $request->only(['marque', 'modele', 'immatriculation', 'annee', 'kilometrage']);
         $data['user_id'] = auth()->id();
+
+        // Traiter l'upload de photo
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->store('vehicules', 'public');
+            $data['photo'] = $photoPath;
+        }
+
         Vehicule::create($data);
 
         return redirect()->route('vehicules.index')->with('success', 'Véhicule ajouté !');
@@ -56,9 +64,22 @@ class VehiculeController extends Controller
             'modele' => 'required',
             'annee' => 'required|integer',
             'kilometrage' => 'required|integer',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        $vehicule->update($request->only(['marque', 'modele', 'annee', 'kilometrage']));
+        $data = $request->only(['marque', 'modele', 'annee', 'kilometrage']);
+
+        // Traiter l'upload de photo
+        if ($request->hasFile('photo')) {
+            // Supprimer l'ancienne photo si elle existe
+            if ($vehicule->photo && \Storage::disk('public')->exists($vehicule->photo)) {
+                \Storage::disk('public')->delete($vehicule->photo);
+            }
+            $photoPath = $request->file('photo')->store('vehicules', 'public');
+            $data['photo'] = $photoPath;
+        }
+
+        $vehicule->update($data);
 
         return redirect()->route('vehicules.index')->with('success', 'Véhicule modifié !');
     }

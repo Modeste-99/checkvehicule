@@ -26,17 +26,6 @@
             @enderror
         </div>
 
-        <div>
-            <label class="block text-sm font-semibold text-gray-700 mb-2">
-                Catégorie
-            </label>
-            <input type="text" name="categorie" value="{{ old('categorie', $cour->categorie) }}" 
-                class="w-full px-4 py-3 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all duration-200 @error('categorie') border-red-500 @enderror" 
-                placeholder="Ex: Code de la route, Conduite, Sécurité routière...">
-            @error('categorie')
-                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-            @enderror
-        </div>
 
         <div>
             <label class="block text-sm font-semibold text-gray-700 mb-2">
@@ -51,16 +40,26 @@
 
         <div>
             <label class="block text-sm font-semibold text-gray-700 mb-2">
-                Fichier PDF
+                Fichier actuel
             </label>
-            @if($cour->fichier_pdf)
+            @if($cour->fichier)
             <div class="mb-4 p-4 bg-gray-50 rounded-lg border border-gray-200">
                 <div class="flex items-center justify-between">
                     <div class="flex items-center gap-3">
-                        <span class="text-2xl">📄</span>
+                        @if($cour->type_fichier === 'pdf')
+                            <span class="text-2xl">📄</span>
+                        @elseif(in_array($cour->type_fichier, ['doc', 'docx']))
+                            <span class="text-2xl">📝</span>
+                        @elseif(in_array($cour->type_fichier, ['ppt', 'pptx']))
+                            <span class="text-2xl">📊</span>
+                        @elseif($cour->type_fichier === 'txt')
+                            <span class="text-2xl">📃</span>
+                        @else
+                            <span class="text-2xl">📎</span>
+                        @endif
                         <div>
-                            <p class="text-sm font-medium text-gray-900">Fichier actuel</p>
-                            <p class="text-xs text-gray-500">{{ $cour->fichier_pdf }}</p>
+                            <p class="text-sm font-medium text-gray-900">{{ $cour->fichier }}</p>
+                            <p class="text-xs text-gray-500">Type: {{ strtoupper($cour->type_fichier) }} - {{ number_format(Storage::size('public/cours/' . $cour->fichier) / 1024, 1) }} KB</p>
                         </div>
                     </div>
                     <a href="{{ route('cours.download', $cour) }}" 
@@ -77,16 +76,16 @@
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <div class="flex text-sm text-gray-600">
-                        <label for="fichier_pdf" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                        <label for="fichier" class="relative cursor-pointer bg-white rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                             <span>Télécharger un nouveau fichier</span>
-                            <input id="fichier_pdf" name="fichier_pdf" type="file" accept=".pdf" class="sr-only">
+                            <input id="fichier" name="fichier" type="file" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt" class="sr-only">
                         </label>
                         <p class="pl-1">ou glissez-déposez</p>
                     </div>
-                    <p class="text-xs text-gray-500">PDF jusqu'à 10MB</p>
+                    <p class="text-xs text-gray-500">Fichiers acceptés : PDF, DOC, DOCX, PPT, PPTX, TXT (max 10MB)</p>
                 </div>
             </div>
-            @error('fichier_pdf')
+            @error('fichier')
                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
             @enderror
         </div>

@@ -13,8 +13,32 @@ class Entretien extends Model
         'date_entretien',
         'kilometrage',
         'prix',
+        'prix_pieces',
+        'prix_main_oeuvre',
         'note',
     ];
+
+    /**
+     * Les attributs qui doivent être convertis.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'date_entretien' => 'date',
+        'prix' => 'decimal:2',
+        'prix_pieces' => 'decimal:2',
+        'prix_main_oeuvre' => 'decimal:2',
+    ];
+
+    /**
+     * Calcule automatiquement le prix total avant la sauvegarde
+     */
+    protected static function booted()
+    {
+        static::saving(function ($entretien) {
+            $entretien->prix = (float)($entretien->prix_pieces ?? 0) + (float)($entretien->prix_main_oeuvre ?? 0);
+        });
+    }
 
     public function user()
     {
