@@ -5,22 +5,30 @@
         @endcomponent
     @endslot
 
-    # Rappel : {{ ucfirst($rappel->type) }} pour votre véhicule
+    # Rappel d'entretien - {{ ucfirst($rappel->type) }}
 
-    Bonjour {{ $rappel->user->name }},
+    Bonjour {{ $user->name }},
 
-    Vous avez programmé un rappel pour :
+    Ceci est un rappel pour l'entretien programmé de votre véhicule qui arrive à sa date prévue.
 
-    - **Type** : {{ ucfirst($rappel->type) }}
-    - **Véhicule** : {{ $rappel->vehicule->marque }} {{ $rappel->vehicule->modele }} ({{ $rappel->vehicule->immatriculation }})
+    ## Détails du rappel
+
+    - **Type d'entretien** : {{ ucfirst($rappel->type) }}
+    - **Véhicule** : {{ $vehicule->marque }} {{ $vehicule->modele }}
+    - **Immatriculation** : {{ $vehicule->immatriculation }}
+    - **Kilométrage** : {{ number_format($vehicule->kilometrage, 0, ',', ' ') }} km
     - **Date prévue** : {{ $rappel->date_rappel->format('d/m/Y à H:i') }}
     
     @if($rappel->notes)
-    - **Notes** : {{ $rappel->notes }}
+    **Notes** : {{ $rappel->notes }}
     @endif
 
-    @component('mail::button', ['url' => route('dashboard')])
-        Voir le tableau de bord
+    ## Action requise
+
+    Veuillez prendre rendez-vous avec un garage pour effectuer cet entretien dès que possible afin de maintenir votre véhicule en bon état.
+
+    @component('mail::button', ['url' => route('vehicules.index')])
+        Voir mes véhicules
     @endcomponent
 
     Cordialement,  

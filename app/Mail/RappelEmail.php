@@ -10,27 +10,24 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class RappelEmail extends Mailable
+class RappelEmail extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    public $rappel;
-    public function __construct(Rappel $rappel)
+    /**
+     * Create a new message instance.
+     */
+    public function __construct(public Rappel $rappel)
     {
-        $this->rappel = $rappel;
     }
-    public function build()
-    {
-        return $this->subject('Rappel: ' . ucfirst($this->rappel->type) . ' pour votre véhicule')
-                    ->view('emails.rappel');
-    }
+
     /**
      * Get the message envelope.
      */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rappel Email',
+            subject: 'Rappel: ' . ucfirst($this->rappel->type) . ' pour votre véhicule ' . $this->rappel->vehicule->marque . ' ' . $this->rappel->vehicule->modele,
         );
     }
 
@@ -40,7 +37,12 @@ class RappelEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.rappel',
+            with: [
+                'rappel' => $this->rappel,
+                'user' => $this->rappel->user,
+                'vehicule' => $this->rappel->vehicule,
+            ],
         );
     }
 
