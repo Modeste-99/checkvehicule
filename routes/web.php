@@ -29,6 +29,16 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.post');
 Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.post');
 
+// Termes et conditions
+Route::get('/terms', function () {
+    return view('auth.terms');
+})->name('terms');
+
+// Politique de confidentialité
+Route::get('/privacy', function () {
+    return view('auth.privacy');
+})->name('privacy');
+
 // Déconnexion
 Route::post('/logout', [LogoutController::class, 'logout'])->name('logout');
 
@@ -60,7 +70,7 @@ Route::middleware('auth')->group(function () {
     Route::get('cours/{cour}/download', [CoursController::class, 'download'])->name('cours.download');
 
     // Rappels
-    Route::resource('rappels', RappelController::class)->except(['show', 'edit', 'update']);
+    Route::resource('rappels', RappelController::class)->except(['show']);
 
     // Profil
     Route::get('profile', [ProfileController::class, 'show'])->name('profile.show');

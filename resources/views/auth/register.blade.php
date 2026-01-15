@@ -4,10 +4,10 @@
 
 @section('content')
 
-<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-green-50 to-emerald-100 py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div class="text-center">
-            <h1 class="text-4xl font-bold text-gray-900 mb-2">🚗 CheckVehicule</h1>
+            <h1 class="text-4xl font-bold text-gray-900 mb-2">CheckVehicule</h1>
             <p class="text-gray-600">Inscrivez-vous pour accéder à votre compte</p>
         </div>
 
@@ -60,6 +60,20 @@
                     <input type="password" name="password_confirmation" 
                         class="w-full px-4 py-3 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all duration-200" 
                         placeholder="••••••••" required>
+                </div>
+
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                    <label class="flex items-start cursor-pointer">
+                        <input type="checkbox" name="accept_terms" 
+                            class="mt-1 w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500 @error('accept_terms') border-red-500 @enderror" 
+                            {{ old('accept_terms') ? 'checked' : '' }}>
+                        <span class="ml-3 text-sm text-gray-700">
+                            J'accepte les <a href="{{ route('terms') }}" target="_blank" class="font-semibold text-green-600 hover:text-green-800 underline">conditions d'utilisation</a> et la <a href="{{ route('privacy') }}" target="_blank" class="font-semibold text-green-600 hover:text-green-800 underline">politique de confidentialité</a>
+                        </span>
+                    </label>
+                    @error('accept_terms')
+                        <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-200">

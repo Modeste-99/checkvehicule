@@ -27,7 +27,7 @@ class RappelEmail extends Mailable implements ShouldQueue
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Rappel: ' . ucfirst($this->rappel->type) . ' pour votre véhicule ' . $this->rappel->vehicule->marque . ' ' . $this->rappel->vehicule->modele,
+            subject: 'Rappel: ' . ucfirst($this->rappel->type),
         );
     }
 

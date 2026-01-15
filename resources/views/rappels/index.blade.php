@@ -40,6 +40,10 @@
                         </div>
                     </div>
                     <div class="flex space-x-2">
+                        <a href="{{ route('rappels.edit', $rappel) }}"
+                           class="text-blue-600 hover:text-blue-900">
+                            Modifier
+                        </a>
                         <form action="{{ route('rappels.destroy', $rappel) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
